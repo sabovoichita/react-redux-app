@@ -1,9 +1,13 @@
-import logo from './logo.svg';
-import './App.css';
+import logo from "./logo.svg";
+import "./App.css";
+import DisplayMessages from "./components/DisplayMessages"; // Use relative path
 
 function App() {
   return (
     <div className="App">
+      {/* Add the DisplayMessages component */}
+      <DisplayMessages />
+
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>
