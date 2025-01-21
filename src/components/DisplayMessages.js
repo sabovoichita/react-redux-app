@@ -1,17 +1,15 @@
 import React, { useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { connect } from "react-redux";
 import { addMessage } from "../redux/actions";
 
-const DisplayMessages = () => {
+const DisplayMessages = ({ messages, submitNewMessage }) => {
   const [input, setInput] = useState("");
-  const messages = useSelector((state) => state.messages); // Target only the messages slice
-  const dispatch = useDispatch();
 
   const handleChange = (e) => setInput(e.target.value);
 
   const submitMessage = () => {
     if (input.trim() !== "") {
-      dispatch(addMessage(input)); // Dispatch the addMessage action
+      submitNewMessage(input); // Call prop function mapped from dispatch
       setInput(""); // Clear the input field
     }
   };
@@ -30,4 +28,15 @@ const DisplayMessages = () => {
   );
 };
 
-export default DisplayMessages;
+// mapStateToProps to map state to component props
+const mapStateToProps = (state) => ({
+  messages: state.messages,
+});
+
+// mapDispatchToProps to map dispatch to component props
+const mapDispatchToProps = (dispatch) => ({
+  submitNewMessage: (message) => dispatch(addMessage(message)),
+});
+
+// Connect Redux to the component
+export default connect(mapStateToProps, mapDispatchToProps)(DisplayMessages);
