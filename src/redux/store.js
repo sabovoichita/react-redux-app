@@ -1,9 +1,10 @@
-import { createStore } from "redux";
-import { messageReducer } from "./reducers";
+import { configureStore } from "@reduxjs/toolkit"; // Import from Redux Toolkit
+import { messageReducer } from "./reducers"; // Import your reducer
 
-const store = createStore(
-  messageReducer,
-  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
-);
+// Create the store using configureStore
+const store = configureStore({
+  reducer: messageReducer, // Specify the reducer
+  devTools: process.env.NODE_ENV !== "production", // Enable Redux DevTools in development mode
+});
 
 export default store;

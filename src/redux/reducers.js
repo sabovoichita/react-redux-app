@@ -1,17 +1,13 @@
 import { ADD } from "./actions";
 
-const initialState = {
-  messages: [],
-};
-
-export const messageReducer = (state = initialState, action) => {
+const messageReducer = (state = [], action) => {
   switch (action.type) {
     case ADD:
-      return {
-        ...state,
-        messages: [...state.messages, action.message],
-      };
+      return [...state, action.message];
     default:
       return state;
   }
 };
+
+// Use named export
+export { messageReducer };

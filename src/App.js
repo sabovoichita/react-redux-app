@@ -1,29 +1,17 @@
-import logo from "./logo.svg";
-import "./App.css";
-import DisplayMessages from "./components/DisplayMessages"; // Use relative path
+import React from "react";
+import { connect } from "react-redux";
+import DisplayMessages from "./components/DisplayMessages";
+import { mapStateToProps, mapDispatchToProps } from "./redux/connect";
 
-function App() {
+// Create the container component
+const Container = connect(mapStateToProps, mapDispatchToProps)(DisplayMessages);
+
+const App = () => {
   return (
-    <div className="App">
-      {/* Add the DisplayMessages component */}
-      <DisplayMessages />
-
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <Container />
     </div>
   );
-}
+};
 
 export default App;

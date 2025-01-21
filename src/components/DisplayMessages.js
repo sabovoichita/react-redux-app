@@ -1,51 +1,46 @@
-import React, { useState } from "react";
-import { connect } from "react-redux";
-import { addMessage } from "../redux/actions";
+import React from "react";
 
-const DisplayMessages = ({ messages, submitNewMessage }) => {
-  const [input, setInput] = useState("");
-
-  const handleChange = (e) => setInput(e.target.value);
-
-  const submitMessage = () => {
-    if (input.trim() !== "") {
-      submitNewMessage(input); // Call prop function mapped from dispatch
-      setInput(""); // Clear the input field
-    }
-  };
-
-  return (
-    <div>
-      <h2>Type in a new Message:</h2>
-      <input type="text" value={input} onChange={handleChange} />
-      <button onClick={submitMessage}>Add Message</button>
-      <ul>
-        {messages.map((message, index) => (
-          <li key={index}>{message}</li>
-        ))}
-      </ul>
-    </div>
-  );
-};
-
-class Presentational extends React.Component {
+class DisplayMessages extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      input: "",
+    };
+    this.handleChange = this.handleChange.bind(this);
+    this.submitMessage = this.submitMessage.bind(this);
   }
+
+  handleChange(event) {
+    this.setState({
+      input: event.target.value,
+    });
+  }
+
+  submitMessage() {
+    const { submitNewMessage } = this.props; // Access Redux action from props
+    submitNewMessage(this.state.input);
+    this.setState({
+      input: "",
+    });
+  }
+
   render() {
-    return <h3>This is a Presentational Component</h3>;
+    const { messages } = this.props; // Access Redux state from props
+
+    return (
+      <div>
+        <h2>Type in a new Message:</h2>
+        <input value={this.state.input} onChange={this.handleChange} />
+        <br />
+        <button onClick={this.submitMessage}>Submit</button>
+        <ul>
+          {messages.map((message, idx) => (
+            <li key={idx}>{message}</li>
+          ))}
+        </ul>
+      </div>
+    );
   }
 }
 
-// mapStateToProps to map state to component props
-const mapStateToProps = (state) => ({
-  messages: state.messages,
-});
-
-// mapDispatchToProps to map dispatch to component props
-const mapDispatchToProps = (dispatch) => ({
-  submitNewMessage: (message) => dispatch(addMessage(message)),
-});
-
-// Connect Redux to the component
-export default connect(mapStateToProps, mapDispatchToProps)(Presentational);
+export default DisplayMessages;
