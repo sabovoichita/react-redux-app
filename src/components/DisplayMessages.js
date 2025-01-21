@@ -28,6 +28,15 @@ const DisplayMessages = ({ messages, submitNewMessage }) => {
   );
 };
 
+class Presentational extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+  render() {
+    return <h3>This is a Presentational Component</h3>;
+  }
+}
+
 // mapStateToProps to map state to component props
 const mapStateToProps = (state) => ({
   messages: state.messages,
@@ -39,4 +48,4 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 // Connect Redux to the component
-export default connect(mapStateToProps, mapDispatchToProps)(DisplayMessages);
+export default connect(mapStateToProps, mapDispatchToProps)(Presentational);
