@@ -17,16 +17,13 @@ class DisplayMessages extends React.Component {
   }
 
   submitMessage() {
-    const { submitNewMessage } = this.props; // Access Redux action from props
-    submitNewMessage(this.state.input);
-    this.setState({
-      input: "",
-    });
+    if (this.state.input.trim() !== "") {
+      this.props.submitNewMessage(this.state.input); // Dispatch action to Redux
+      this.setState({ input: "" }); // Clear input field
+    }
   }
 
   render() {
-    const { messages } = this.props; // Access Redux state from props
-
     return (
       <div>
         <h2>Type in a new Message:</h2>
@@ -34,9 +31,9 @@ class DisplayMessages extends React.Component {
         <br />
         <button onClick={this.submitMessage}>Submit</button>
         <ul>
-          {messages.map((message, idx) => (
-            <li key={idx}>{message}</li>
-          ))}
+          {this.props.messages.map((message, idx) => {
+            return <li key={idx}>{message}</li>;
+          })}
         </ul>
       </div>
     );
